@@ -1,0 +1,48 @@
+Source: libsixel
+Priority: extra
+Maintainer: NOKUBI Takatsugu <knok@daionet.gr.jp>
+Build-Depends: debhelper (>= 8.0.0), autotools-dev
+Standards-Version: 3.9.3
+Section: libs
+Homepage: https://github.com/saitoha/libsixel
+#Vcs-Git: git://git.debian.org/collab-maint/libsixel.git
+#Vcs-Browser: http://git.debian.org/?p=collab-maint/libsixel.git;a=summary
+
+Package: libsixel-dev
+Section: libdevel
+Architecture: any
+Depends: libsixel1 (= ${binary:Version})
+Description: DEC SIXEL graphics codec implementation (develop)
+ SIXEL is one of image formats for printer and terminal imaging
+ introduced by Digital Equipment Corp. (DEC). Its data scheme is
+ represented as a terminal-friendly escape sequence. 
+ So if you want to view a SIXEL image file, all you have to do
+ is "cat" it to your terminal.
+ .
+ The package is for development.
+
+Package: libsixel1
+Section: libs
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: DEC SIXEL graphics codec implementation (runtime)
+ SIXEL is one of image formats for printer and terminal imaging
+ introduced by Digital Equipment Corp. (DEC). Its data scheme is
+ represented as a terminal-friendly escape sequence. 
+ So if you want to view a SIXEL image file, all you have to do
+ is "cat" it to your terminal.
+ .
+ The package is for runtime.
+
+Package: libsixel-bin
+Section: libs
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: DEC SIXEL graphics codec implementation (binary)
+ SIXEL is one of image formats for printer and terminal imaging
+ introduced by Digital Equipment Corp. (DEC). Its data scheme is
+ represented as a terminal-friendly escape sequence. 
+ So if you want to view a SIXEL image file, all you have to do
+ is "cat" it to your terminal.
+ .
+ The package contains execution binaries.
