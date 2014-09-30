@@ -1,4 +1,5 @@
 README.md
 examples/osx/opengl/Makefile
 examples/osx/opengl/opengl.c
+images/*
 
