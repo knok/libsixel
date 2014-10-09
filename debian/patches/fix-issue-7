@@ -1,0 +1,146 @@
+Description: tidy clean target
+ The original upstream remains some generated files on "make clean"
+Bug-Debian: https://bugs.debian.org/763424
+Origin: upstream
+Bug: https://github.com/saitoha/libsixel/issues/7
+Forwarded: not-needed
+
+--- libsixel-1.1.2.orig/Makefile.am
++++ libsixel-1.1.2/Makefile.am
+@@ -7,7 +7,10 @@ ACLOCAL_AMFLAGS = -I m4 ${ACLOCAL_FLAGS}
+ pkgconfigdir = @pkgconfigdir@
+ pkgconfig_DATA = libsixel.pc
+ 
+-CLEANFILES = valgrind.log
++CLEANFILES = valgrind.log test.log
++
++all-am:
++	cp package.json.in package.json
+ 
+ test: all
+ 	$(MAKE) test -C converters > test.log
+--- libsixel-1.1.2.orig/Makefile.in
++++ libsixel-1.1.2/Makefile.in
+@@ -82,7 +82,7 @@ subdir = .
+ DIST_COMMON = $(srcdir)/Makefile.in $(srcdir)/Makefile.am \
+ 	$(top_srcdir)/configure $(am__configure_deps) \
+ 	$(srcdir)/config.h.in $(srcdir)/libsixel.pc.in \
+-	$(srcdir)/package.json.in ChangeLog compile config.guess \
++	$(srcdir)/package.json.in.in ChangeLog compile config.guess \
+ 	config.sub depcomp install-sh missing ltmain.sh
+ ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
+ am__aclocal_m4_deps = $(top_srcdir)/m4/ax_gcc_func_attribute.m4 \
+@@ -96,7 +96,7 @@ am__CONFIG_DISTCLEAN_FILES = config.stat
+  configure.lineno config.status.lineno
+ mkinstalldirs = $(install_sh) -d
+ CONFIG_HEADER = config.h
+-CONFIG_CLEAN_FILES = libsixel.pc package.json
++CONFIG_CLEAN_FILES = libsixel.pc package.json.in
+ CONFIG_CLEAN_VPATH_FILES =
+ AM_V_P = $(am__v_P_@AM_V@)
+ am__v_P_ = $(am__v_P_@AM_DEFAULT_V@)
+@@ -362,7 +362,7 @@ SUBDIRS = include src converters
+ DIST_SUBDIRS = $(SUBDIRS)
+ ACLOCAL_AMFLAGS = -I m4 ${ACLOCAL_FLAGS}
+ pkgconfig_DATA = libsixel.pc
+-CLEANFILES = valgrind.log
++CLEANFILES = valgrind.log test.log
+ all: config.h
+ 	$(MAKE) $(AM_MAKEFLAGS) all-recursive
+ 
+@@ -418,7 +418,7 @@ distclean-hdr:
+ 	-rm -f config.h stamp-h1
+ libsixel.pc: $(top_builddir)/config.status $(srcdir)/libsixel.pc.in
+ 	cd $(top_builddir) && $(SHELL) ./config.status $@
+-package.json: $(top_builddir)/config.status $(srcdir)/package.json.in
++package.json.in: $(top_builddir)/config.status $(srcdir)/package.json.in.in
+ 	cd $(top_builddir) && $(SHELL) ./config.status $@
+ 
+ mostlyclean-libtool:
+@@ -874,6 +874,9 @@ uninstall-am: uninstall-pkgconfigDATA
+ 	uninstall-am uninstall-pkgconfigDATA
+ 
+ 
++all-am:
++	cp package.json.in package.json
++
+ test: all
+ 	$(MAKE) test -C converters > test.log
+ 
+--- libsixel-1.1.2.orig/configure
++++ libsixel-1.1.2/configure
+@@ -13960,7 +13960,7 @@ fi
+           touch aclocal.m4 Makefile.in */Makefile.in configure config.h.in
+ 
+ 
+-ac_config_files="$ac_config_files Makefile libsixel.pc package.json include/sixel.h src/Makefile include/Makefile converters/Makefile"
++ac_config_files="$ac_config_files Makefile libsixel.pc package.json.in include/sixel.h src/Makefile include/Makefile converters/Makefile"
+ 
+ 
+ cat >confcache <<\_ACEOF
+@@ -14986,7 +14986,7 @@ do
+     "config.h") CONFIG_HEADERS="$CONFIG_HEADERS config.h" ;;
+     "Makefile") CONFIG_FILES="$CONFIG_FILES Makefile" ;;
+     "libsixel.pc") CONFIG_FILES="$CONFIG_FILES libsixel.pc" ;;
+-    "package.json") CONFIG_FILES="$CONFIG_FILES package.json" ;;
++    "package.json.in") CONFIG_FILES="$CONFIG_FILES package.json.in" ;;
+     "include/sixel.h") CONFIG_FILES="$CONFIG_FILES include/sixel.h" ;;
+     "src/Makefile") CONFIG_FILES="$CONFIG_FILES src/Makefile" ;;
+     "include/Makefile") CONFIG_FILES="$CONFIG_FILES include/Makefile" ;;
+--- libsixel-1.1.2.orig/configure.ac
++++ libsixel-1.1.2/configure.ac
+@@ -296,7 +296,7 @@ LS_UPDATE_TIMESTAMP
+ 
+ AC_CONFIG_FILES([Makefile
+                  libsixel.pc
+-                 package.json
++                 package.json.in
+                  include/sixel.h
+                  src/Makefile
+                  include/Makefile
+--- libsixel-1.1.2.orig/converters/Makefile.am
++++ libsixel-1.1.2/converters/Makefile.am
+@@ -13,7 +13,7 @@ if COND_GCOV
+ MAYBE_COVERAGE = --coverage
+ endif
+ 
+-CLEANFILES = *.gcno *.gcda *.gcov snake.png snake.sixel
++CLEANFILES = *.gcno *.gcda *.gcov snake1.png snake2.png snake2.sixel
+ 
+ if WANT_IMG2SIXEL
+ bin_PROGRAMS += img2sixel
+--- libsixel-1.1.2.orig/converters/Makefile.in
++++ libsixel-1.1.2/converters/Makefile.in
+@@ -416,7 +416,7 @@ dist_man_MANS = $(am__append_2) $(am__ap
+ dist_bashcompletion_DATA = $(am__append_3)
+ dist_zshcompletion_DATA = $(am__append_4)
+ @COND_GCOV_TRUE@MAYBE_COVERAGE = --coverage
+-CLEANFILES = *.gcno *.gcda *.gcov snake.png snake.sixel
++CLEANFILES = *.gcno *.gcda *.gcov snake1.png snake2.png snake2.sixel
+ @WANT_IMG2SIXEL_TRUE@img2sixel_SOURCES = img2sixel.c scale.c malloc_stub.c loader.c frompnm.c \
+ @WANT_IMG2SIXEL_TRUE@                    scale.h malloc_stub.h loader.h frompnm.h
+ 
+--- libsixel-1.1.2.orig/package.json.in
++++ /dev/null
+@@ -1,9 +0,0 @@
+-{
+-  "name": "libsixel",
+-  "version": "@PACKAGE_VERSION@",
+-  "repo": "saitoha/libsixel",
+-  "description": "@PACKAGE_DESCRIPTION@",
+-  "keywords": ["terminal", "graphics", "image", "sixel"],
+-  "license": "MIT",
+-  "install": "./configure && make install"
+-}
+--- /dev/null
++++ libsixel-1.1.2/package.json.in.in
+@@ -0,0 +1,9 @@
++{
++  "name": "libsixel",
++  "version": "@PACKAGE_VERSION@",
++  "repo": "saitoha/libsixel",
++  "description": "@PACKAGE_DESCRIPTION@",
++  "keywords": ["terminal", "graphics", "image", "sixel"],
++  "license": "MIT",
++  "install": "./configure && make install"
++}
