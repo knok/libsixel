@@ -1,3 +1,9 @@
+libsixel (1.4.2-1) unstable; urgency=medium
+
+  * New upstream.
+
+ -- NOKUBI Takatsugu <knok@daionet.gr.jp>  Tue, 09 Dec 2014 07:59:57 +0000
+
 libsixel (1.1.2-2) unstable; urgency=medium
 
   * Add watch file (Closes: #772444)
