@@ -2,7 +2,7 @@ Source: libsixel
 Priority: extra
 Maintainer: NOKUBI Takatsugu <knok@daionet.gr.jp>
 Build-Depends: debhelper (>= 8.0.0), autotools-dev
-Standards-Version: 3.9.5
+Standards-Version: 3.9.6
 Section: libs
 Homepage: https://github.com/saitoha/libsixel
 #Vcs-Git: git://git.debian.org/collab-maint/libsixel.git
