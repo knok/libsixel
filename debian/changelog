@@ -1,3 +1,10 @@
+libsixel (1.5.2-1) unstable; urgency=medium
+
+  * New upstream.
+  * Include new OpenGL example.
+
+ -- NOKUBI Takatsugu <knok@daionet.gr.jp>  Tue, 01 Sep 2015 05:20:17 +0000
+
 libsixel (1.4.2-1) unstable; urgency=medium
 
   * New upstream.
