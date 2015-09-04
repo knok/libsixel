@@ -22,4 +22,5 @@ override_dh_auto_configure:
 	dh_auto_configure -- \
 	--with-bashcompletiondir=/etc/bash_completion.d \
 	--with-zshcompletiondir=/usr/share/zsh/functions/Completion/Unix \
-	--includedir=/usr/include/sixel
+	--includedir=/usr/include/sixel \
+	--disable-python

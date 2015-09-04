@@ -1,3 +1,9 @@
+libsixel (1.5.2-2) unstable; urgency=medium
+
+  * Disable python.
+
+ -- NOKUBI Takatsugu <knok@daionet.gr.jp>  Fri, 04 Sep 2015 06:50:38 +0000
+
 libsixel (1.5.2-1) unstable; urgency=medium
 
   * New upstream.
