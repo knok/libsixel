@@ -1,0 +1,21 @@
+From: NOKUBI Takatsugu <knok@daionet.gr.jp>
+Date: Fri, 9 Aug 2019 16:47:29 +0900
+Subject: assign default error message
+
+---
+ src/stb_image.h | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/src/stb_image.h b/src/stb_image.h
+index d0fa9c2..5f8f96d 100644
+--- a/src/stb_image.h
++++ b/src/stb_image.h
+@@ -875,6 +875,8 @@ static const char *stbi__g_failure_reason;
+ 
+ STBIDEF const char *stbi_failure_reason(void)
+ {
++   if (stbi__g_failure_reason == NULL)
++      stbi__g_failure_reason = "unknwon error, refer error message before assignment";
+    return stbi__g_failure_reason;
+ }
+ 
