@@ -1,0 +1,21 @@
+From: NOKUBI Takatsugu <knok@daionet.gr.jp>
+Date: Thu, 22 Aug 2019 15:30:36 +0900
+Subject: malloc size check
+
+---
+ src/fromsixel.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/fromsixel.c b/src/fromsixel.c
+index a60b4bc..648095a 100644
+--- a/src/fromsixel.c
++++ b/src/fromsixel.c
+@@ -475,7 +475,7 @@ sixel_decode_raw(
+                 dmsx = nx;
+                 dmsy = ny;
+                 dmbuf = (unsigned char *)sixel_allocator_malloc(allocator, dmsx * dmsy);
+-                if (dmbuf == NULL) {
++                if (dmbuf == NULL || dmsx * dmsy == 0) {
+                     sixel_allocator_free(allocator, imbuf);
+                     goto end;
+                 }
