@@ -1,0 +1,25 @@
+From: NOKUBI Takatsugu <knok@daionet.gr.jp>
+Date: Wed, 7 Aug 2019 16:23:53 +0900
+Subject: Add malloc size check
+
+---
+ src/allocator.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/src/allocator.c b/src/allocator.c
+index 216fa34..c33c74b 100644
+--- a/src/allocator.c
++++ b/src/allocator.c
+@@ -147,6 +147,12 @@ sixel_allocator_malloc(
+     assert(allocator);
+     assert(allocator->fn_malloc);
+ 
++    if (n == 0) {
++        sixel_helper_set_additional_message(
++            "sixel_allocator_malloc: called with n == 0");
++        return NULL;
++    }
++
+     return allocator->fn_malloc(n);
+ }
+ 
