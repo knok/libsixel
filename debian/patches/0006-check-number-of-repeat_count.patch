@@ -1,0 +1,23 @@
+From: Takatsugu Nokubi <takatsugu.nokubi@robotfund.co.jp>
+Date: Mon, 9 Sep 2019 15:12:02 +0900
+Subject: check number of repeat_count
+
+---
+ src/fromsixel.c | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/src/fromsixel.c b/src/fromsixel.c
+index 648095a..388ff7b 100644
+--- a/src/fromsixel.c
++++ b/src/fromsixel.c
+@@ -422,6 +422,10 @@ sixel_decode_raw(
+             if (n > 0) {
+                 repeat_count = param[0];
+             }
++            if (repeat_count > 0x7fff) { /* check too huge number */
++                status = SIXEL_BAD_INPUT;
++                goto end;
++            }
+ 
+         } else if (*p == '#') {
+             /* DECGCI Graphics Color Introducer # Pc; Pu; Px; Py; Pz */
